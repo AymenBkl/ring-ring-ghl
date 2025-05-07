@@ -13,6 +13,6 @@ router.all('/')
   .options('/', cors.corsWithOptions, function (req, res, next) {
     next();
   })
-  .post('/ghl-sms', cors.corsWithOptions, privateAccess.apiKeyAuth, ghlController.ringRingGhlSMS);
+  .post('/ringring-sms', cors.corsWithOptions, privateAccess.apiKeyAuth, ghlController.ringRingGhlSMS);
 
 module.exports = router;

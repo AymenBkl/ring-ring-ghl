@@ -5,8 +5,7 @@ const allowedHosts = [process.env.Host];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log(origin);
-    if (allowedOrigins.includes(origin) || (process.env.NODE_ENV == 'development' && !origin) || true) {
+    if (allowedOrigins.includes(origin) || (process.env.NODE_ENV == 'development' && !origin)) {
       callback(null, true);
     } 
     else if (!origin || origin == undefined){
@@ -23,14 +22,14 @@ const customCorsMiddleware = (req, res, next) => {
   const origin = req.headers.origin;
   const referer = req.headers.referer;
   const host = req.headers.host;
-  console.log(req.headers.host,req.headers.referer,req.headers.origin);
-  if (origin && allowedOrigins.includes(origin) || (process.env.NODE_ENV == 'development' && !origin) || true) {
+  console.log(req.headers.host,req.headers.referer,req.headers.origin,allowedHosts.includes(host),allowedHosts);
+  if (origin && allowedOrigins.includes(allowedOrigin => allowedOrigin.includes(origin)) || (process.env.NODE_ENV == 'development' && !origin)) {
     // Cross-origin request with a valid origin
     next();
   } else if (!origin && referer && referer.startsWith(process.env.webURL)) {
     // Same-origin request validated by Referer
     next();
-  } else if (!origin && allowedHosts.includes(host)) {
+  } else if (!origin && allowedHosts.find(allowedHost => allowedHost.includes(host))) {
     // Same-origin request validated by Host
     next();
   } else {

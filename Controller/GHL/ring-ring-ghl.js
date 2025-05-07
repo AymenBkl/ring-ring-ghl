@@ -5,11 +5,11 @@ const { z } = require('zod');
 async function sendSMS(req,res) {
     let validatedSMS = validateSMS(req.body);
     if (validatedSMS) {
-        await smsRingRing.sendSMS(req.body.phone,req.body.message);
+        await smsRingRing.sendSMS(validatedSMS.phone,validatedSMS.message);
         response.sendResponse(res,200,'Message sent Successfully');
     }
     else {
-        response.sendResponse(res,500,'Something Went Wrong');
+        response.sendResponse(res,429,'Validation Failed');
     }
 }
 
@@ -20,6 +20,7 @@ function validateSMS(data) {
           .string()
           .min(8, "Phone number is too short")
           .max(15, "Phone number is too long")
+          .transform(val => val.replace(/\s+/g, '')) // Remove all spaces
           .transform(val => val.replace(/^\+/, "")) // Remove "+" if present
           .refine(val => /^\d{8,15}$/.test(val), {
             message: "Phone number must contain only digits (after removing +)",
@@ -31,7 +32,7 @@ function validateSMS(data) {
     });
     let validationResult = smsSchema.safeParse(data);
     if (validationResult && validationResult.success) {
-        return true;
+        return validationResult.data;
     }
     else {
         return false;

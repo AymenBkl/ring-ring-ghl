@@ -1,7 +1,7 @@
 const request = require("../Shared/request");
 const shared = require("../Shared/shared");
 const fs = require("fs");
-const baseUrl = process.env.enviroment == "development" ? `${process.env.RING_RING_BASE_URL}sandbox/` : `${process.env.RING_RING_BASE_URL}v1/`;
+const baseUrl = process.env.NODE_ENV == "development" ? `${process.env.RING_RING_BASE_URL}sandbox/` : `${process.env.RING_RING_BASE_URL}v1/`;
 let messages = require("./Files/messages.json");
 
 async function sendSMS(phone,message) {
@@ -16,7 +16,7 @@ async function sendSMS(phone,message) {
     let result = await request.postRequest(`${baseUrl}message`,payload,{});
     if (result && result.success) {
         let messageData = result.data;
-        if (messageData && messageData.ResultCode) {
+        if (messageData) {
             writeFile(phone,message,reference,decodeResultCode(messageData.ResultCode));
         }
         else {

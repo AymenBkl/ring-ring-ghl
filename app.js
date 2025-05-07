@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static("views"));
 app.disable('x-powered-by');
-app.use('/', ghlRouter);
+app.use('/ghl', ghlRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

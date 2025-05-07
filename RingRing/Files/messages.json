@@ -1,0 +1,37 @@
+[
+    {
+        "phone": "447893930663",
+        "message": "Helo again this is a test from api",
+        "date": "2025-05-07T19:11:56.913Z",
+        "result": "No code found",
+        "reference": "SMS_20250507_116156_4J4K"
+    },
+    {
+        "phone": "+4478 93930663",
+        "message": "Helo again this is a test from api",
+        "date": "2025-05-07T19:23:12.824Z",
+        "result": "No code found",
+        "reference": "SMS_20250507_792372_F7MV"
+    },
+    {
+        "phone": "+44 7893 930663",
+        "message": "Hello Aymen  Boukhelkhal Test Hope you are doing well, so i am sending you about aymenxyz6@gmail.com",
+        "date": "2025-05-07T19:25:27.214Z",
+        "result": "Success",
+        "reference": "SMS_20250507_926472_PRLD"
+    },
+    {
+        "phone": "+44 7893 930663",
+        "message": "Hello Aymen  Boukhelkhal Test Hope you are doing well, so i am sending you about aymenxyz6@gmail.com",
+        "date": "2025-05-07T19:25:32.480Z",
+        "result": "Success",
+        "reference": "SMS_20250507_932237_KNW4"
+    },
+    {
+        "phone": "447893930663",
+        "message": "Hello Aymen  Boukhelkhal Test Hope you are doing well, so i am sending you about aymenxyz6@gmail.com",
+        "date": "2025-05-07T19:29:05.219Z",
+        "result": "Success",
+        "reference": "SMS_20250507_144589_V4UM"
+    }
+]

@@ -5,7 +5,8 @@ const { z } = require('zod');
 async function sendSMS(req,res) {
     let validatedSMS = validateSMS(req.body);
     if (validatedSMS) {
-
+        await smsRingRing.sendSMS(req.body.phone,req.body.message);
+        response.sendResponse(res,200,'Message sent Successfully');
     }
     else {
         response.sendResponse(res,500,'Something Went Wrong');
@@ -36,3 +37,5 @@ function validateSMS(data) {
         return false;
     }
 }
+
+module.exports = {sendSMS};

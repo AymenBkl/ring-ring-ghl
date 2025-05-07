@@ -1,37 +1,41 @@
 const request = require("../Shared/request");
+const shared = require("../Shared/shared");
 const fs = require("fs");
 const baseUrl = process.env.enviroment == "development" ? `${process.env.RING_RING_BASE_URL}sandbox/` : `${process.env.RING_RING_BASE_URL}v1/`;
 let messages = require("./Files/messages.json");
 
 async function sendSMS(phone,message) {
+    const reference = shared.generateSmsReference();
     let payload = {
         to: phone,
         message: message,
-        apiKey:process.env.RING_RING_API_KEY
+        apiKey:process.env.RING_RING_API_KEY,
+        reference: reference
     };
 
     let result = await request.postRequest(`${baseUrl}message`,payload,{});
     if (result && result.success) {
         let messageData = result.data;
         if (messageData && messageData.ResultCode) {
-            writeFile(phone,message,decodeResultCode(messageData.ResultCode));
+            writeFile(phone,message,reference,decodeResultCode(messageData.ResultCode));
         }
         else {
-            writeFile(phone,message,decodeResultCode("No code found"));
+            writeFile(phone,message,reference,"No code found");
         }
     }
     else {
-        writeFile(phone,message,decodeResultCode("Error"));
+        writeFile(phone,message,reference,"Error on request");
     }
     return true;
 }
 
-function writeFile(phone,message,result) {
+function writeFile(phone,message,reference,result) {
     messages.push({
         phone:phone,
         message:message,
         date:new Date().toISOString(),
-        result:result
+        result:result,
+        reference:reference
     })
     fs.writeFile("RingRing/Files/messages.json",JSON.stringify(messages),(err,data) => {
         if (err) console.error("Error while writing files");

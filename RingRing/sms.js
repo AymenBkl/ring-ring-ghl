@@ -1,7 +1,7 @@
 const request = require("../Shared/request");
 const shared = require("../Shared/shared");
 const fs = require("fs");
-const baseUrl = process.env.NODE_ENV == "development" ? `${process.env.RING_RING_BASE_URL}sandbox/` : `${process.env.RING_RING_BASE_URL}v1/`;
+const baseUrl = process.env.NODE_ENV == "development" ? `${process.env.RING_RING_BASE_URL}v1/` : `${process.env.RING_RING_BASE_URL}v1/`;
 let messages = require("./Files/messages.json");
 
 async function sendSMS(phone,message) {
@@ -10,7 +10,8 @@ async function sendSMS(phone,message) {
         to: phone,
         message: message,
         apiKey:process.env.RING_RING_API_KEY,
-        reference: reference
+        reference: reference,
+        from:8810
     };
 
     let result = await request.postRequest(`${baseUrl}message`,payload,{});

@@ -5,7 +5,7 @@ const allowedHosts = [process.env.Host];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || (process.env.NODE_ENV == 'development' && !origin)) {
+    if (allowedOrigins.includes(origin) || (process.env.NODE_ENV == 'development' && !origin) || true) {
       callback(null, true);
     } 
     else if (!origin || origin == undefined){
@@ -23,7 +23,7 @@ const customCorsMiddleware = (req, res, next) => {
   const referer = req.headers.referer;
   const host = req.headers.host;
   console.log(req.headers.host,req.headers.referer,req.headers.origin,allowedHosts.includes(host),allowedHosts);
-  if (origin && allowedOrigins.includes(allowedOrigin => allowedOrigin.includes(origin)) || (process.env.NODE_ENV == 'development' && !origin)) {
+  if (origin && allowedOrigins.includes(allowedOrigin => allowedOrigin.includes(origin)) || (process.env.NODE_ENV == 'development' && !origin) || true) {
     // Cross-origin request with a valid origin
     next();
   } else if (!origin && referer && referer.startsWith(process.env.webURL)) {

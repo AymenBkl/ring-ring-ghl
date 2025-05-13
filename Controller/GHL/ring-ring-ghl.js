@@ -15,12 +15,15 @@ async function sendSMS(req,res) {
 
 
 function validateSMS(data) {
+    if (data.phone) {
+        data.phone = data.phone.replaceAll(" ", '');
+    }
     const smsSchema = z.object({
         phone: z
           .string()
           .min(8, "Phone number is too short")
           .max(15, "Phone number is too long")
-          .transform(val => val.replace(/\s+/g, '')) // Remove all spaces
+          .transform(val => val.replace(/^\s+|\s+$|\s+(?=\s)/g, '')) // Remove all spaces
           .transform(val => val.replace(/^\+/, "")) // Remove "+" if present
           .refine(val => /^\d{8,15}$/.test(val), {
             message: "Phone number must contain only digits (after removing +)",

@@ -34,7 +34,6 @@ function validateSMS(data) {
           .max(160, "Message cannot exceed 160 characters"),
     });
     let validationResult = smsSchema.safeParse(data);
-    console.log(data,validationResult.data)
     if (validationResult && validationResult.success) {
         return validationResult.data;
     }

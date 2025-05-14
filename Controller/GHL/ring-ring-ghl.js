@@ -17,6 +17,7 @@ async function sendSMS(req,res) {
 function validateSMS(data) {
     if (data.phone) {
         data.phone = data.phone.replaceAll(" ", '');
+        data.phone = data.replaceAll(/^\+/, "");
     }
     console.log(data);
     const smsSchema = z.object({

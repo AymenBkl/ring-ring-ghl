@@ -18,6 +18,7 @@ function validateSMS(data) {
     if (data.phone) {
         data.phone = data.phone.replaceAll(" ", '');
     }
+    console.log(data);
     const smsSchema = z.object({
         phone: z
           .string()

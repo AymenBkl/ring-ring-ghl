@@ -33,7 +33,7 @@ function validateSMS(data) {
         message: z
           .string()
           .min(1, "Message cannot be empty")
-          .max(160, "Message cannot exceed 160 characters"),
+          .max(5000, "Message cannot exceed 160 characters"),
     });
     let validationResult = smsSchema.safeParse(data);
     if (validationResult && validationResult.success) {

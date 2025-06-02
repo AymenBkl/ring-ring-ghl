@@ -11,7 +11,8 @@ async function sendSMS(phone,message) {
         message: message,
         apiKey:process.env.RING_RING_API_KEY,
         reference: reference,
-        from:8810
+        from:8810,
+        messageEncoding: "Text"
     };
 
     let result = await request.postRequest(`${baseUrl}message`,payload,{});

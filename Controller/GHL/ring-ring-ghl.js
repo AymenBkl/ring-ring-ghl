@@ -3,7 +3,7 @@ const response = require("../../Shared/sendResponse");
 const { z } = require('zod');
 
 async function sendSMS(req,res) {
-    let validatedSMS = validateSMS(req.body);
+    let validatedSMS = validateSMS(req.body);    
     if (validatedSMS) {
         await smsRingRing.sendSMS(validatedSMS.phone,validatedSMS.message);
         response.sendResponse(res,200,'Message sent Successfully');
@@ -19,7 +19,6 @@ function validateSMS(data) {
         data.phone = data.phone.replaceAll(" ", '');
         data.phone = data.phone.replace(/^\+/, "");
     }
-    console.log(data);
     const smsSchema = z.object({
         phone: z
           .string()
@@ -33,7 +32,8 @@ function validateSMS(data) {
         message: z
           .string()
           .min(1, "Message cannot be empty")
-          .max(5000, "Message cannot exceed 160 characters"),
+          .max(5000, "Message cannot exceed 160 characters")
+          .transform(val => val.replace(/\\n/g, '\n'))
     });
     let validationResult = smsSchema.safeParse(data);
     if (validationResult && validationResult.success) {
